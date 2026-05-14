@@ -1,1 +1,1 @@
-/tmp/eslint-symlink-poc-victim.js
+/tmp/eslint-rce-poc-bashrc
