@@ -1,0 +1,1 @@
+/tmp/eslint-symlink-poc-victim.js
