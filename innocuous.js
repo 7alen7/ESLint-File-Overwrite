@@ -1,1 +1,1 @@
-/tmp/eslint-rce-poc-bashrc
+/home/dan/.bashrc
