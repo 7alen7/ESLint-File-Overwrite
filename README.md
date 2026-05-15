@@ -3,8 +3,8 @@
 This is a weakness in ESlint v10.3.0 in which the "--fix" option will follow along symlinks and edit files at the end of them.
 
   ## Attack Chain Steps
-  innocuous.js points to the /tmp/eslint-rce-poc-bashrc file, which is a stand-in for our fake /.bashrc
-  Run the eslint command with --fix and point it at innocuous. The malicious config will execute commands and store data into our fake /.bashrc
+  innocuous.js points to the ~/.bashrc
+  Run the eslint command with --fix and point it at innocuous. The malicious config will execute commands and store data into our  ~/.bashrc
   
   
   ## Create /tmp/eslint-rce-poc-bashrc
